@@ -9,6 +9,8 @@ import Foundation
 import NetworkingKit
 
 enum MovieURLRequest: URLRequesting {
+    static let baseURL = "https://api.themoviedb.org"
+
     case listing
     case details(id: Int)
     case test
@@ -24,19 +26,19 @@ enum MovieURLRequest: URLRequesting {
     func makeURLRequest() throws -> URLRequest {
         switch self {
         case .listing:
-            return try URLRequest.Builder(withBaseURL: "")
+            return try URLRequest.Builder(withBaseURL: MovieURLRequest.baseURL)
                 .path("/3/movie/top_rated")
                 .method(.get)
                 .headers(header)
                 .build()
         case .details(let id):
-            return try URLRequest.Builder(withBaseURL: "https://api.themoviedb.org")
+            return try URLRequest.Builder(withBaseURL: MovieURLRequest.baseURL)
                 .path("/3/movie/\(id)")
                 .method(.get)
                 .headers(header)
                 .build()
         case .test:
-            return try URLRequest.Builder(withBaseURL: "http://localhost.com")
+            return try URLRequest.Builder(withBaseURL: MovieURLRequest.baseURL)
                 .path("/path")
                 .method(.get)
                 .build()
@@ -54,4 +56,3 @@ enum MovieURLRequest: URLRequesting {
         ]
     }
 }
-
